@@ -661,7 +661,8 @@ def main(cfg: DictConfig):
 
         perplexity, eval_loss = evaluate(cfg, model, eval_dataloader, accelerator, eval_dataset)
         logger.info(f"epoch {epoch}: perplexity: {perplexity} train_loss: {train_loss} eval_loss: {eval_loss}")
-
+        with open(os.path.join(cfg.output_dir, "all_results.json"), "w") as f:
+           json.dump({"epoch": epoch, "perplexity": perplexity, "train_loss": train_loss, "eval_loss": eval_loss}, f)
 #         if cfg.tracking:
 #             accelerator.log(
 #                 {
