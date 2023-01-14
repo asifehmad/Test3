@@ -661,8 +661,8 @@ def main(cfg: DictConfig):
 
         perplexity, eval_loss = evaluate(cfg, model, eval_dataloader, accelerator, eval_dataset)
         logger.info(f"epoch {epoch}: perplexity: {perplexity} train_loss: {train_loss} eval_loss: {eval_loss}")
-        with open(os.path.join(cfg.output_dir, "all_results.json"), "w") as f:
-           json.dump({"epoch": epoch, "perplexity": perplexity, "train_loss": train_loss, "eval_loss": eval_loss}, f)
+        with open(os.path.join(cfg.output_dir, "all_results1.json"), "w") as f:
+            json.dump({"epoch": epoch, "perplexity": perplexity, "train_loss": train_loss.item(), "eval_loss": eval_loss.item()}, f)
 #         if cfg.tracking:
 #             accelerator.log(
 #                 {
@@ -728,7 +728,7 @@ def main(cfg: DictConfig):
 #             if cfg.push_to_hub:
 #                 repo.push_to_hub(commit_message="End of training", auto_lfs_prune=True)
 
-        with open(os.path.join(cfg.output_dir, "all_results.json"), "w") as f:
+        with open(os.path.join(cfg.output_dir, "all_results2.json"), "w") as f:
             json.dump({"perplexity": perplexity, "train_loss": train_loss.item(), "eval_loss": eval_loss.item()}, f)
     
 #     print('Started Pushing the Model and Tokenizer to Hugging Face Hub')
