@@ -83,11 +83,11 @@ def check_cfg_and_load_defaults(cfg: DictConfig) -> DictConfig:
 
     subtensor = bittensor.subtensor(network=cfg.bittensor.network)
     if cfg.dataset.block_size is None:
-        cfg.dataset.block_size = subtensor.validator_sequence_length
+        cfg.dataset.block_size = subtensor.validator_sequence_length(netuid=cfg.bittensor.netuid)
     if cfg.training.train_batch_size is None:
-        cfg.training.train_batch_size = subtensor.validator_batch_size
+        cfg.training.train_batch_size = subtensor.validator_batch_size(netuid=cfg.bittensor.netuid)
     if cfg.training.eval_batch_size is None:
-        cfg.training.eval_batch_size = subtensor.validator_batch_size
+        cfg.training.eval_batch_size = subtensor.validator_batch_size(netuid=cfg.bittensor.netuid)
 
     return cfg
 
@@ -285,7 +285,7 @@ def preprocess(cfg, accelerator, tokenizer, raw_datasets):
         # Split by chunks of max_len.
         result = {
             k: [
-                t[i : i + cfg.dataset.block_size]
+                t[i: i + cfg.dataset.block_size]
                 for i in range(0, total_length, cfg.dataset.block_size)
             ]
             for k, t in concatenated_examples.items()
