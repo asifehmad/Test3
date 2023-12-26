@@ -4,5 +4,5 @@ sentencepiece != 0.1.92
 hydra-core
 deepspeed
 torch==1.13.1 
-transformers==4.25.1 
+transformers==4.36.0 
 tokenizers==0.13.2
